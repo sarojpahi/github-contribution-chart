@@ -4,21 +4,21 @@
     <img height="40" src="./assets/cube-logo-light.png">
   </picture>
   <br>
-  <span>English</span>
+  <a href="./README.md">English</a>
   |
-  <a href="./README-CN.md">简体中文</a>
+  <span>简体中文</span>
   <img src="./assets/ipad.png" style="max-width: 90%" />
-  <h4>A Nest.js API to render GitHub user's contributions to chart</h4>
+  <h4>基于 Nest.js 的服务端渲染 GitHub 贡献墙</h4>
   <p style="color: grey;font-size: 0.9rem">
-  Just pass GitHub username in route <code>param</code>, you will get the contribution wall render by svg. Support custom
-  <b>output format</b>,
-  <b>color</b>,
-  <b>quality</b>, 
-  <b>size</b>
-  and so on
+  只需要在路由 <code>参数</code> 中传入 GitHub 用户名，就可以渲染出 GitHub 贡献墙，支持自定义
+  <b>输出格式</b>,
+  <b>主题颜色</b>,
+  <b>导出图像的质量</b>, 
+  <b>统计天数</b>
+  等等
   </p>
   <br />
-  <span>Real-time rendering example：</span>
+  <span>实时渲染示例：</span>
   <br />
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://ssr-contributions-svg.vercel.app/_/CatsJuice?format=svg&weeks=50&dark=true">
@@ -27,71 +27,73 @@
   </picture>
 </div>
 
-## Playground
+## 在线预览与配置
 
-Now you can config and preview your contribution wall in the [Playground](https://ssr-contributions-svg.vercel.app/)
+现在你可以通过 [Playground](https://ssr-contributions-svg.vercel.app/) 在线预览与配置。
 
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/anim/playground-en-dark.gif">
-    <img src="./assets/anim/playground-en-light.gif">
+    <source media="(prefers-color-scheme: dark)" srcset="assets/anim/playground-zh-dark.gif">
+    <img src="./assets/anim/playground-zh-light.gif">
   </picture>
 </div>
 
-## Principle of 3dbar implementation
 
-- Read on [Medium](https://medium.com/@catsjuice/fake-3d-bar-chart-with-svg-js-134684bd5100)
-- View minimum realization code on [Codepen](https://codepen.io/catsjuice/pen/MWVqNdQ)
+## 实现原理
+
+- 在 [Medium](https://medium.com/@catsjuice/fake-3d-bar-chart-with-svg-js-134684bd5100) 上查看实现原理。
+- 在 [Codepen](https://codepen.io/catsjuice/pen/MWVqNdQ) 上查看最小实现。
 
 
+## 本地运行
 
-## Run locally
-
-- **prepare your github pat for Github OpenAPI:**
+- **为 GitHub OpenAPI 准备 PAT:**
   > https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
 
-- **create a `.env` file in the root of project, Fill it with reference `.env.example`**
+- **在根目录下创建 `.env` 文件， 并参考 `.env.example` 填写**
 
-- **install packages with:**
+- **使用以下命令安装依赖:**
   ```shell
   # npm install
   yarn install
   ```
-- **run server:**
+- **运行服务:**
   ```shell
   # npm run start:dev
   yarn start:dev
   ```
-- **try it out**
-  visit `http://localhost:${port}/_/${username}`, 
-  - `port`: `SERVE_PORT` variable in your `.env`, default is `3000`
-  - `username`: Github username
+- **在浏览器中查看效果**
+  访问 `http://localhost:${port}/_/${username}`, 
+  - `port`: `.env` 文件中的`SERVE_PORT` 变量 , 默认为 `3000`
+  - `username`: Github 用户名
 
-## Configuration
+## 配置
 
 ```
 ${host}/_/${username}?${queryString}
 ```
 
-- `username`: Github username
+- `username`: Github 用户名
 - `queryString`
 
-**Common parameters:**
+**公共请求参数:**
+
 <table>
   <tr>
-    <th>param</th>
-    <th>type</th>
-    <th>desc</th>
-    <th>default</th>
+    <th>参数名</th>
+    <th>类型</th>
+    <th>描述</th>
+    <th>默认值</th>
   </tr>
 
   <tr>
     <td>theme</td>
     <td><code>enum</code></td>
     <td>
-      Preset themes, avaiable values:
-      <code>random</code>(use random theme) or 
-      <a href="#themes">Theme Enums</a>
+      内置主题，可用值：
+      <code>random</code>（使用随机主题）
+      或
+      <a href="#主题">主题枚举值</a>
     </td>
     <td><code>green</code></td>
   </tr>
@@ -100,7 +102,8 @@ ${host}/_/${username}?${queryString}
     <td>chart</td>
     <td><code>enum</code></td>
     <td>
-      Chart type, See <a href="#charts">Charts</a>
+      图表类型, 可用图表见：
+      <a href="#图表">图表</a>
     </td>
     <td><code>calendar</code></td>
   </tr>
@@ -109,27 +112,27 @@ ${host}/_/${username}?${queryString}
     <td>format</td>
     <td><code>enum</code></td>
     <td>
-      Output formats:
+      输出格式:
       <ul>
         <li>
           <code>html</code>
-          <span>: return a html page</span>
+          <span>: 直接返回一个 html 页面</span>
         </li>
         <li>
           <code>svg</code>
-          <span>: return an svg file</span>
+          <span>: 返回 svg 文件</span>
         </li>
         <li>
           <code>xml</code>
-          <span>: return an svg as xml</span>
+          <span>: 返回 xml 格式的svg</span>
         </li>
         <li>
           <code>png</code>
-          <span>: return a png file(transparent background)</span>
+          <span>: 返回 png 格式的文件(透明背景)</span>
         </li>
         <li>
           <code>jpeg</code>
-          <span>: return a jpg file(white background)</span>
+          <span>: 返回 jpeg 格式的文件(白色背景)</span>
         </li>
       </ul>
     </td>
@@ -140,10 +143,11 @@ ${host}/_/${username}?${queryString}
     <td>quality</td>
     <td><code>number</code></td>
     <td>
-      Image quality, supports numbers from <code>0.1</code> to <code>10</code>.
+      图像质量，取值范围为 <code>0.1</code> 到 <code>10</code>.
       <b>
-        Only works when format is
+        仅当导出格式（<code>format</code>）为
         <code>png</code> or <code>jpeg</code>
+        时有效
       <b>
     </td>
     <td><code>1</code></td>
@@ -153,7 +157,7 @@ ${host}/_/${username}?${queryString}
     <td>widget_size</td>
     <td><code>enum</code></td>
     <td>
-      Automatically calculate the number of weeks and size needed for the ios widget by specifying this property, avaiable values:
+     通过指定这一属性，自动计算周的数量 和 最佳的 ios 小组件，可用值为：
       <ul>
         <li><code>small</code></li>
         <li><code>medium</code></li>
@@ -167,9 +171,9 @@ ${host}/_/${username}?${queryString}
     <td>weeks</td>
     <td><code>number</code></td>
     <td>
-      Force specifying how many weeks to render, allow numbers from
-      <code>1</code> to <code>50</code>.
-      <b>This will override <code>weeks</code> calculated by <code>widget_size</code></b>
+      强制指定周数，取值范围在
+      <code>1</code> 到 <code>50</code>.
+      <b>会覆盖 <code>widget_size</code> 计算的 <code>周数</code> </b>
     </td>
     <td><code>undefined</code></td>
   </tr>
@@ -178,12 +182,11 @@ ${host}/_/${username}?${queryString}
     <td>colors</td>
     <td><code>string | string[]</code></td>
     <td>
-      Hex colors value (without <code>#</code> prefix) join with 
-      <code>,</code>.
+      通过 <code>,</code> 拼接Hex 格式的颜色值 (需要去除 <code>#</code> 前缀) 
       <br />
-      <span>Or multiple colors.</span>
+      <span>或者使用多个 <code>colors</code>变量</span>
       <br />
-      <span>e.g.</span>
+      <span>例如：</span>
       <br />
       <ul>
         <li>
@@ -196,8 +199,8 @@ ${host}/_/${username}?${queryString}
         </li>
       </ul>
       <b>
-        This will override 
-        <code>theme</code> property
+        这将会覆盖
+        <code>theme</code> 属性
       </b>
     </td>
     <td><code>undefined</code></td>
@@ -207,8 +210,8 @@ ${host}/_/${username}?${queryString}
     <td>dark</td>
     <td><code>boolean</code></td>
     <td>
-      Enable dark-mode, See
-      <a href="#darkmode">DarkMode</a>
+      启用 “暗黑模式”，详见
+      <a href="#暗黑模式">暗黑模式</a>
     </td>
     <td>
       <code>false</code>
@@ -217,21 +220,21 @@ ${host}/_/${username}?${queryString}
 
 </table>
 
-**3DBar chart parameters:**
+**3D柱状图参数:**
 
 <table>
   <tr>
-    <th>param</th>
-    <th>type</th>
-    <th>desc</th>
-    <th>default</th>
+    <th>参数名</th>
+    <th>类型</th>
+    <th>描述</th>
+    <th>默认值</th>
   </tr>
 
   <tr>
     <td>gap</td>
     <td><code>number</code></td>
     <td>
-    Gap size between cubes, allowed numbers from <code>0</code> to <code>20</code>
+    方块之间的间距, 可用值范围为 <code>0</code> 到 <code>20</code>
     </td>
     <td>
       <code>1.2</code>
@@ -242,7 +245,7 @@ ${host}/_/${username}?${queryString}
     <td>scale</td>
     <td><code>number</code></td>
     <td>
-      Adjust vertical top view, allowed numbers not less than <code>1</code>
+      调整俯视的角度, 允许不小于 <code>1</code> 的数值
     </td>
     <td><code>2</code></td>
   </tr>
@@ -251,8 +254,8 @@ ${host}/_/${username}?${queryString}
     <td>light</td>
     <td><code>number</code></td>
     <td>
-      Adjust light intensity, allowed numbers from <code>1</code>
-      to <code>60</code>
+      调整光照强度, 可用范围为 <code>1</code>
+      到 <code>60</code>
     </td>
     <td><code>10</code></td>
   </tr>
@@ -261,7 +264,7 @@ ${host}/_/${username}?${queryString}
     <td>gradient</td>
     <td><code>boolean</code></td>
     <td>
-      Use gradient mode to cube
+      为柱子使用渐变色模式
     </td>
     <td><code>false</code></td>
   </tr>
@@ -270,34 +273,36 @@ ${host}/_/${username}?${queryString}
     <td>flatten</td>
     <td><code>number</code></td>
     <td>
-      Enable flatten-mode, 2 styles are avaiable:
+      使用扁平模式，支持两种样式：
       <br>
-      <code>1</code>: flatten all blocks
+      <code>1</code>: 所有方块都扁平化
       <br>
-      <code>2</code>: ignore empty blocks
+      <code>2</code>: 忽略空值
       <br>
-      See <a href="#flatten-mode">flatten-mode examples</a>
+      See <a href="#扁平模式">扁平模式示例</a>
     </td>
     <td>
       <code>0</code>
     </td>
   </tr>
 
-
   <tr>
     <td>animation</td>
     <td><code>enum</code></td>
-    <td>Enable animation, See <a href="#3dbar-animation">3dbar Animation</a></td>
+    <td>启用动画, 见 <a href="#3dbar-动画">3dbar 动画</a></td>
     <td><code>undefined</td></td>
   </tr>
 
+
 </table>
+
+## 3dbar 动画
 
 ## 3dbar Animation
 
 Enable animation by passing <code>animation</code> property, available values:
 
-- `fall` (apper only)
+- `fall` (仅入场动画)
   ```
   chart=3dbar&weeks=20&flatten=1&animation=fall
   ```
@@ -307,7 +312,7 @@ Enable animation by passing <code>animation</code> property, available values:
     <source media="(prefers-color-scheme: light)" srcset="https://ssr-contributions-svg.vercel.app/_/Catsjuice?chart=3dbar&weeks=20&flatten=1&animation=fall&format=svg">
     <img src="https://ssr-contributions-svg.vercel.app/_/Catsjuice?chart=3dbar&weeks=20&flatten=1&animation=fall&format=svg" width="400" />
   </picture>
-- `raise` (apper only)
+- `raise` (仅入场动画)
   ```
   chart=3dbar&weeks=20&flatten=1&animation=raise
   ```
@@ -317,7 +322,7 @@ Enable animation by passing <code>animation</code> property, available values:
     <source media="(prefers-color-scheme: light)" srcset="https://ssr-contributions-svg.vercel.app/_/Catsjuice?chart=3dbar&weeks=20&flatten=1&animation=raise&format=svg">
     <img src="https://ssr-contributions-svg.vercel.app/_/Catsjuice?chart=3dbar&weeks=20&flatten=1&animation=raise&format=svg" width="400" />
   </picture>
-- `wave` (loop)
+- `wave` (循环播放)
   ```
   chart=3dbar&weeks=20&flatten=1&animation=wave
   ```
@@ -328,7 +333,8 @@ Enable animation by passing <code>animation</code> property, available values:
     <img src="https://ssr-contributions-svg.vercel.app/_/Catsjuice?chart=3dbar&weeks=20&flatten=1&animation=wave&format=svg" width="400" />
   </picture>
 
-**Custome animation details**: (pass as url query parameters)
+
+**自定义动画细节**: (在 url 中作为 `query` 参数传递)
 
 <details>
   <summary>
@@ -338,12 +344,12 @@ Enable animation by passing <code>animation</code> property, available values:
     <li>
       <code>animation_duration</code>
       <code>&lt;Number&gt;</code>
-      Animation duration in seconds.
+      动画持续时长，单位为秒
     </li>
     <li>
       <code>animation_delay</code>
       <code>&lt;Number&gt;</code>
-      Animation delay in seconds.
+      方块播放的间隔时长，单位为秒
     </li>
   </ul>
 </details>
@@ -357,19 +363,19 @@ Enable animation by passing <code>animation</code> property, available values:
       <code>animation_amplitude</code>
       <code>&lt;Number&gt;</code>
       <br>
-      The extent of the square's movement in pixel(px).
+      方块的移动范围，单位为像素（px）
     </li>
     <li>
       <code>animation_frequency</code>
       <code>&lt;Number&gt;</code>
       <br>
-      Frequency of movement of the square, between <code>[0.01, 0.5]</code>,
+      方块移动频率，范围为 <code>[0.01, 0.5]</code>
     </li>
     <li>
       <code>animation_wave_center</code>
       <code>&lt;Number&gt;_&lt;Number&gt;</code>
       <br>
-      The center of the wave, pass coordinate points <code>x</code>, <code>y</code> as <code>${x}_${y}</code>(Join x, y with <code>_</code>) for example <code>0_0</code>.
+      波纹动画的中心点， 将坐标点 <code>x</code>, <code>y</code> 以 <code>${x}_${y}</code> 的格式传递(使用 <code>_</code> 拼接x, y)。例如：<code>0_0</code>
     </li>
   </ul>
 </details>
@@ -377,65 +383,70 @@ Enable animation by passing <code>animation</code> property, available values:
 
 
 
-## DarkMode
 
-In fact, the display of the chart is determined by the `theme`, which is overridden by the `color` property. Enabling dark mode here affects **the display of the built-in theme** and the **background color** when outputting `jpeg` or `html`, while the background is `transparent` in all other output formats. For more details, see [Themes](#themes)
 
-## Charts
+## 暗黑模式
+
+实际上，图表的显示由主题（ `theme` ）决定，而主题会被颜色（ `colors` ）属性覆盖。在这里启用暗黑模式，影响的是**内置主题的配色**和输出 `jpeg` 或 `html` 时的背景颜色，而其他输出格式下，背景都是透明的，暗黑模式下的主题色可参考 [主题](#主题)
+
+
+## 图表
 
 - **calendar**
-  - use: `chart=calendar`
-  - e.g.
-    ```
-    https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=calendar&format=svg
-    ```
+  - 使用: `chart=calendar`
+  - 示例
   
+    ```
+    https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=calendar&quality=0.3&format=svg
+    ```
+
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=calendar&format=svg&dark=true">
       <source media="(prefers-color-scheme: light)" srcset="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=calendar&format=svg&dark=false">
       <img src="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=calendar&format=svg" width="400" />
     </picture>
-  
+
 - **3dbar**
-  - use: `chart=3dbar`
-  - e.g.
+  - 使用: `chart=3dbar`
+  - 示例
   
     ```
-    https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=3dbar&format=svg
+    https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=3dbar&quality=0.3&format=svg&gradient=true
     ```
-  
+
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=3dbar&format=svg&dark=true">
       <source media="(prefers-color-scheme: light)" srcset="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=3dbar&format=svg">
       <img alt="3DBar" src="https://ssr-contributions-svg.vercel.app/_/CatsJuice?chart=3dbar&format=svg" width="400" />
     </picture>
 
-## Themes
 
-All avaiable themes(live update):
+## 主题
 
-- `light`    
-  <img src="https://ssr-contributions-svg.vercel.app/themes?format=svg" >
+所有可用主题（实时更新）:
+
+- `亮色模式`  
+  <img src="https://ssr-contributions-svg.vercel.app/themes?format=svg&quality=0.5" >
+- `暗黑模式`
   
-- `dark`  
   <img src="https://ssr-contributions-svg.vercel.app/themes?format=svg&quality=0.5&dark=true" >
 
-## Examples
+## 使用场景
 
-### pin to notion
+### 贴到 Notion 的页面中
   
   ![notion](./assets/notion.png)
 
-### Use as ios widget with [Scritable](https://apps.apple.com/us/app/scriptable/id1405459188)
+### 作为 ios 小组件使用 [Scritable](https://apps.apple.com/cn/app/scriptable/id1405459188)
 
-**code example:**
+**示例代码:**
 
 ```js
 let [chart, widgetSize, theme, weeks] = (args.widgetParameter || "")
   .split(",")
   .map((v) => v.trim());
 chart = chart || "calendar";
-widgetSize = widgetSize || "medium";
+widgetSize = widgetSize || "midium";
 theme = theme || "green";
 const darkMode = Device.isUsingDarkAppearance();
 let url = `https://ssr-contributions-svg.vercel.app/_/CatsJuice?format=jpeg&quality=2&theme=${theme}&widget_size=${widgetSize}&chart=${chart}&dark=${darkMode}`;
@@ -455,28 +466,28 @@ async function createWidget() {
 }
 ```
 
-Add scritable widget to home screen, and select script in widget configuration.
+添加 scriptable 小组件到桌面，并在组件设置中选择对应的脚本
 
-**Note:**
-The above script relies on the input of the `parameter` parameter, filling in `chart`, `widgetSize`, `theme`, `weeks` in order using the `,` division. here are some examples:
+**注意：**
+以上脚本依赖于 `parameter` 参数的输入，依次填入 `chart`, `widgetSize`, `theme`, `weeks` 使用 `,` 分割, 以下是一些示例:
 
 - `3dbar,large,,30`
-  
+
   ```
   chart=3dbar&widgetSize=large&weeks=30
   ```
 - `3dbar,,yellow_wine,20`
-  
+
   ```
   chart=3dbar&theme=yellow_wine&weeks=20
   ```
 - `,,blue`
-  
+
   ```
   theme=blue
   ```
 - `,small,purple`
-  
+
   ```
   widgetSize=small&theme=purple
   ```
@@ -486,7 +497,7 @@ The above script relies on the input of the `parameter` parameter, filling in `c
   <img src="./assets/iphone11pro.png" alt="iPhone 11 Pro"/>
 </div>
 
-### flatten-mode
+### 扁平模式
 
 - `flatten=1&format=svg`
   
